@@ -3,7 +3,7 @@
 > Sistema inteligente para diagnóstico de doenças em plantas utilizando Inteligência Artificial.
 
 <p align="center">
-  <img src="docs/images/banner.png" alt="Banner PlantAI" width="100%">
+  <img src="documentos/imagens/banner.png" alt="Banner PlantAI" width="100%">
 </p>
 
 <p align="center">
