@@ -9,6 +9,7 @@
 - Marcus Vinicius 
 - Ramon José
 - Matheus Oliveira
+- Yallison Faria
 
 ## 👨‍🏫 Professor
 
