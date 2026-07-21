@@ -2,112 +2,126 @@
 
 > Sistema inteligente para diagnóstico de doenças em plantas utilizando Inteligência Artificial.
 
-## 👥 Integrantes
+<p align="center">
+  <img src="docs/images/banner.png" alt="Banner PlantAI" width="100%">
+</p>
 
-- Guilherme Valbonetti
-- Jonathan Rubens 
-- Marcus Vinicius 
-- Ramon José
-- Matheus Oliveira
-- Yallison Faria
+<p align="center">
 
-## 👨‍🏫 Professor
+![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+![React Native](https://img.shields.io/badge/React%20Native-Mobile-blue)
+![Node.js](https://img.shields.io/badge/Node.js-Backend-green)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-Nome do Professor
-
-## 🎯 Objetivo
-
-O PlantAI é uma aplicação mobile desenvolvida para auxiliar agricultores, produtores rurais e cultivadores na identificação precoce de doenças em plantas através da análise de imagens utilizando Inteligência Artificial.
-
-O sistema fornece um diagnóstico da planta, apresenta recomendações de tratamento e mantém um histórico das análises realizadas pelo usuário.
+</p>
 
 ---
 
-# 📌 Funcionalidades
+## 📖 Sobre o projeto
 
-- Login de usuários
-- Captura ou upload de imagens
-- Diagnóstico utilizando IA
-- Exibição do resultado da análise
-- Recomendações de tratamento
-- Histórico de análises
-- Perfil do usuário
+O **PlantAI** é uma aplicação mobile desenvolvida durante o **Hackathon da PUC Minas** com o objetivo de auxiliar agricultores, produtores rurais e cultivadores na identificação precoce de doenças em plantas utilizando Inteligência Artificial.
+
+Por meio da captura de uma imagem, o sistema realiza uma análise da planta, identifica possíveis doenças, apresenta o nível de confiança da IA e fornece recomendações para auxiliar no tratamento e prevenção.
 
 ---
 
-# 🛠 Tecnologias
+## 🎯 Objetivos
 
-## Front-end
+- Facilitar o diagnóstico de doenças em plantas;
+- Auxiliar produtores na tomada de decisão;
+- Reduzir perdas agrícolas;
+- Incentivar práticas sustentáveis;
+- Contribuir para os Objetivos de Desenvolvimento Sustentável (ODS).
+
+---
+
+## 📱 MVP
+
+Nesta primeira versão do projeto, serão implementadas as seguintes funcionalidades:
+
+- Login de usuários;
+- Captura ou upload de imagem da planta;
+- Diagnóstico utilizando Inteligência Artificial;
+- Exibição da confiança da análise;
+- Recomendações de tratamento;
+- Histórico das análises;
+- Perfil do usuário.
+
+---
+
+## 🖼️ Protótipo
+
+<p align="center">
+<img src="docs/images/prototipo.png" width="900">
+</p>
+
+---
+
+## 🗃️ Modelagem do Banco de Dados
+
+<p align="center">
+<img src="docs/images/mer.png" width="900">
+</p>
+
+---
+
+## 🚀 Tecnologias Utilizadas
+
+### Mobile
 
 - React Native
 - Expo
 - TypeScript
 
-## Back-end
+### Backend
 
 - Node.js
 - Express
 
-## Banco de Dados
+### Banco de Dados
 
 - PostgreSQL
 
-## Inteligência Artificial
+### Inteligência Artificial
 
-- API de Visão Computacional (a definir)
-
----
-
-# 📱 Protótipo
-
-> Adicionar imagem do Figma
-
-```
-docs/prototipo.png
-```
+- API de IA para análise de imagens *(em definição)*
 
 ---
 
-# 🗃 Modelagem do Banco
+## 📂 Estrutura do Projeto
 
-> Adicionar imagem do MER
-
-```
-docs/mer.png
-```
-
----
-
-# 📂 Estrutura do Projeto
-
-```
+```text
 PlantAI
 │
 ├── backend/
+│
 ├── frontend/
+│
 ├── database/
+│
 ├── docs/
-└── README.md
+│   ├── images/
+│   ├── prototipo/
+│   ├── mer/
+│   └── apresentacao/
+│
+├── README.md
+├── LICENSE
+└── .gitignore
 ```
 
 ---
 
-# 🚀 Como executar
+## ⚙️ Como executar
 
-## Pré-requisitos
-
-- Node.js
-- Git
-- PostgreSQL
-- Expo Go
-
-## Clonar o projeto
+### Clone o repositório
 
 ```bash
-git clone https://github.com/SEU-USUARIO/plantai.git
+git clone https://github.com/GuilhermeValbonetti/PlantAi.git
 ```
 
-## Backend
+### Backend
 
 ```bash
 cd backend
@@ -115,7 +129,7 @@ npm install
 npm run dev
 ```
 
-## Frontend
+### Frontend
 
 ```bash
 cd frontend
@@ -125,44 +139,64 @@ npx expo start
 
 ---
 
-# 📋 Requisitos
+## 📋 Requisitos Funcionais
 
-## Funcionais
-
-- Login
-- Diagnóstico por imagem
-- Histórico de análises
-- Recomendações
-
-## Não Funcionais
-
-- Interface responsiva
-- Autenticação de usuários
-- Integração com IA
-- Persistência dos dados
+- RF01 – Realizar login;
+- RF02 – Escanear uma planta através de imagem;
+- RF03 – Processar a imagem utilizando IA;
+- RF04 – Exibir diagnóstico;
+- RF05 – Exibir recomendações;
+- RF06 – Salvar análises no histórico;
+- RF07 – Consultar análises anteriores.
 
 ---
 
-# 🌎 Objetivos de Desenvolvimento Sustentável
+## 🔒 Requisitos Não Funcionais
 
-- ODS 12 — Consumo e Produção Responsáveis
-- ODS 15 — Vida Terrestre
+- Interface intuitiva;
+- Aplicação responsiva;
+- Persistência dos dados;
+- Autenticação de usuários;
+- Arquitetura escalável;
+- Integração com Inteligência Artificial.
 
 ---
 
-# 📈 Roadmap
+## 🌎 Objetivos de Desenvolvimento Sustentável
+
+Este projeto contribui para os seguintes Objetivos de Desenvolvimento Sustentável da ONU:
+
+- 🌱 ODS 12 – Consumo e Produção Responsáveis;
+- 🌳 ODS 15 – Vida Terrestre.
+
+---
+
+## 📌 Roadmap
 
 - [x] Definição da ideia
-- [x] Protótipo
-- [ ] Modelagem do banco
+- [x] Prototipação
+- [ ] Modelagem do banco de dados
 - [ ] Desenvolvimento Backend
 - [ ] Desenvolvimento Mobile
 - [ ] Integração com IA
 - [ ] Testes
-- [ ] Apresentação
+- [ ] Apresentação Final
 
 ---
 
-# 📄 Licença
+## 👨‍💻 Equipe
+
+| Integrante | Função |
+|------------|--------|
+| Guilherme Vinicius | Desenvolvedor |
+| Yallison Faria | Desenvolvedor |
+| Jonathan Rubens | Desenvolvedor |
+| Marcus Vinicius | Desenvolvedor |
+| Ramon José | Desenvolvedor |
+| Matheus Oliveira | Desenvolvedor |
+
+---
+
+## 📄 Licença
 
 Este projeto foi desenvolvido para fins acadêmicos durante o Hackathon da PUC Minas.
