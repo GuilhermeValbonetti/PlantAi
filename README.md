@@ -93,9 +93,8 @@ PlantAI
 │
 ├── backend/
 │
-├── mobile/
-│
 ├── database/
+│   └── teste excluir
 │
 ├── docs/
 │   ├── images/
@@ -103,9 +102,39 @@ PlantAI
 │   ├── mer/
 │   └── apresentacao/
 │
-├── README.md
+├── mobile/
+│   ├── .claude/
+│   ├── assets/
+│   ├── node_modules/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── button/
+│   │   │   │   └── button.tsx
+│   │   │   └── card/
+│   │   │       └── card.tsx
+│   │   │
+│   │   └── screens/
+│   │       ├── Home/
+│   │       │   └── home.tsx
+│   │       ├── Login/
+│   │       │   └── login.tsx
+│   │       └── Perfil/
+│   │           └── perfil.tsx
+│   │
+│   ├── .gitignore
+│   ├── AGENTS.md
+│   ├── app.json
+│   ├── App.tsx
+│   ├── CLAUDE.md
+│   ├── index.ts
+│   ├── LICENSE
+│   ├── package.json
+│   ├── package-lock.json
+│   └── tsconfig.json
+│
+├── .gitignore
 ├── LICENSE
-└── .gitignore
+└── README.md
 ```
 
 ---
