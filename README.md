@@ -201,7 +201,7 @@ Este projeto contribui para os seguintes Objetivos de Desenvolvimento Sustentáv
 
 | Integrante | Função |
 |------------|--------|
-| Guilherme Vinicius | Desenvolvedor |
+| Guilherme Valbonetti | Desenvolvedor |
 | Yallison Faria | Desenvolvedor |
 | Jonathan Rubens | Desenvolvedor |
 | Marcus Vinicius | Desenvolvedor |
