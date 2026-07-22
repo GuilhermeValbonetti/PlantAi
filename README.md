@@ -8,11 +8,8 @@
 
 <p align="center">
 
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![React Native](https://img.shields.io/badge/React%20Native-Mobile-blue)
-![Node.js](https://img.shields.io/badge/Node.js-Backend-green)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![NodeJS](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![Postgres](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+ ![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)
 
 </p>
 
