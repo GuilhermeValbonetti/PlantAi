@@ -93,7 +93,7 @@ PlantAI
 │
 ├── backend/
 │
-├── frontend/
+├── mobile/
 │
 ├── database/
 │
