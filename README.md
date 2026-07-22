@@ -168,19 +168,6 @@ Este projeto contribui para os seguintes Objetivos de Desenvolvimento Sustentáv
 
 ---
 
-## 📌 Roadmap
-
-- [x] Definição da ideia
-- [x] Prototipação
-- [ ] Modelagem do banco de dados
-- [ ] Desenvolvimento Backend
-- [ ] Desenvolvimento Mobile
-- [ ] Integração com IA
-- [ ] Testes
-- [ ] Apresentação Final
-
----
-
 ## 👨‍💻 Equipe
 
 | Integrante | Função |
