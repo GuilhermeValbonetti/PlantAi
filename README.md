@@ -158,7 +158,7 @@ npm run dev
 ### Frontend
 
 ```bash
-cd frontend
+cd mobile
 npm install
 npx expo start
 ```
