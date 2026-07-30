@@ -6,7 +6,6 @@ import { ChevronRight } from "lucide-react-native";
 import { FlatList } from "react-native";
 import ModalFiltro from "../../components/modalFiltro/ModalFiltro";
 import { Filter } from "lucide-react-native";
-import BottomMenu from "../../components/menu/menu";
 import {
   StyleSheet,
   Text,
@@ -15,14 +14,10 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import * as NavigationBar from "expo-navigation-bar";
 
 export default function Histórico() {
   const [modalVisible, setModalVisible] = useState(false);
   const [filtro, setFiltro] = useState("Todos");
-  useEffect(() => {
-    NavigationBar.setVisibilityAsync("hidden");
-  }, []);
   const [pesquisa, setPesquisa] = useState("");
   // const [historico, setHistorico] = useState([]);
   // useEffect(() => {
@@ -150,7 +145,6 @@ export default function Histórico() {
         )}
       />
 
-      <BottomMenu />
       <ModalFiltro
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
