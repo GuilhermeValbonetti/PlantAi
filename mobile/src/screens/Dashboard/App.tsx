@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Pressable, ScrollView, StatusBar as RNStatusBar, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { Pressable, ScrollView, StatusBar as RNStatusBar, Text, View, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
@@ -64,7 +63,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('scan');
 
   return (
-    <LinearGradient colors={['#f8fbf3', '#f8fbf3']} style={styles.screen}>
+    <View style={[styles.screen, { backgroundColor: '#f8fbf3' }]}>
       <StatusBar style="light" />
       <RNStatusBar barStyle="dark-content" backgroundColor="#f8fbf3" />
       <SafeAreaView style={styles.safeArea}>
@@ -135,7 +134,7 @@ export default function App() {
         </ScrollView>
 
       </SafeAreaView>
-    </LinearGradient>
+    </View>
   );
 }
 
