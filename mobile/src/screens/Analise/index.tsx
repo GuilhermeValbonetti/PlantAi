@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   primaryButton: {
-    backgroundColor: "#2F8E3E",
+    backgroundColor: "#5f9b3a",
     borderRadius: 16,
     paddingVertical: 14,
     alignItems: "center",
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   actionButton: {
-    backgroundColor: "#2F8E3E",
+    backgroundColor: "#5f9b3a",
     borderRadius: 18,
     paddingVertical: 16,
     alignItems: "center",
