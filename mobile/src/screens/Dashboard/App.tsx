@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StatusBar as RNStatusBar, Text, View, StyleSheet
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { styles } from './styles';
 
 type SummaryItem = {
@@ -61,6 +62,7 @@ const tabs: TabItem[] = [
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('scan');
+  const navigation = useNavigation<any>();
 
   return (
     <View style={[styles.screen, { backgroundColor: '#f8fbf3' }]}>
@@ -76,9 +78,13 @@ export default function App() {
 
             <View style={styles.headerActions}>
               <Feather name="bell" size={20} color="#2e3a22" />
-              <View style={styles.avatar}>
+              <Pressable
+                style={styles.avatar}
+                accessibilityRole="button"
+                onPress={() => navigation.navigate('Perfil')}
+              >
                 <Text style={styles.avatarText}>J</Text>
-              </View>
+              </Pressable>
             </View>
           </View>
 
@@ -86,7 +92,7 @@ export default function App() {
             <Text style={styles.sectionTitle}>Resumo</Text>
             <View style={styles.summaryRow}>
               {summaryItems.map((item) => (
-                <View
+                <Pressable
                   key={item.label}
                   style={[
                     styles.summaryCard,
@@ -96,10 +102,16 @@ export default function App() {
                         ? styles.summaryMint
                         : styles.summaryRose,
                   ]}
+                  accessibilityRole="button"
+                  onPress={() => {
+                    if (item.label === 'Análises realizadas') {
+                      navigation.navigate('Historico');
+                    }
+                  }}
                 >
                   <Text style={styles.summaryValue}>{item.value}</Text>
                   <Text style={styles.summaryLabel}>{item.label}</Text>
-                </View>
+                </Pressable>
               ))}
             </View>
           </View>
@@ -125,7 +137,11 @@ export default function App() {
             </View>
           </View>
 
-          <Pressable style={styles.primaryButton} accessibilityRole="button">
+          <Pressable
+            style={styles.primaryButton}
+            accessibilityRole="button"
+            onPress={() => navigation.navigate('Analise')}
+          >
             <Feather name="plus" size={18} color="#fff" />
             <Text style={styles.primaryButtonText}>Nova análise</Text>
           </Pressable>

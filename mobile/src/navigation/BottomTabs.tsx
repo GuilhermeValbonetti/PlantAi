@@ -1,16 +1,18 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { House, Sprout, SquareLibrary, User } from "lucide-react-native";
+import { useNavigation } from "@react-navigation/native";
 import Home from "../screens/Dashboard/App";
 import Plantas from "../screens/Plantas/Plantas";
 import Historico from "../screens/Historico/historico";
 import Perfil from "../screens/Perfil";
-import CameraScreen from "../screens/Camera/Camera";
 import { Camera as CameraIcon } from "lucide-react-native";
 import { Pressable } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabs() {
+  const navigation = useNavigation<any>();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -61,14 +63,14 @@ export default function BottomTabs() {
 
       <Tab.Screen
         name="Camera"
-        component={CameraScreen}
+        component={Home}
         options={{
           tabBarButton: (props) => {
-            const { onPress, onLongPress, accessibilityState } = props;
+            const { onLongPress, accessibilityState } = props;
 
             return (
               <Pressable
-                onPress={onPress}
+                onPress={() => navigation.navigate("Analise")}
                 onLongPress={onLongPress}
                 accessibilityState={accessibilityState}
                 style={{
@@ -81,7 +83,7 @@ export default function BottomTabs() {
                   alignItems: "center",
                 }}
               >
-                <CameraIcon size={34} color="#FFF" />
+                <CameraIcon size={34} color="#FFF" strokeWidth={1.8} />
               </Pressable>
             );
           },
