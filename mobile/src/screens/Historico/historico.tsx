@@ -160,7 +160,7 @@ export default function Histórico() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fbffffa9",
+    backgroundColor: '#f8fbf3',
     alignItems: "center",
     marginTop: 50,
     padding: 20,

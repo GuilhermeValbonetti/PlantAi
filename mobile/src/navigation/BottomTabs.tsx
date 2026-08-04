@@ -7,10 +7,13 @@ import Perfil from "../screens/Perfil";
 import CameraScreen from "../screens/Camera/Camera";
 import { Camera as CameraIcon } from "lucide-react-native";
 import { Pressable } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabs() {
+
+  
   return (
     <Tab.Navigator
       screenOptions={{
