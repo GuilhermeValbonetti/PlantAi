@@ -1,5 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
-import BottomTabs from "./src/navigation/BottomTabs";
+import StackNavigator from "./src/navigation/StackNavigator";
 import * as NavigationBar from "expo-navigation-bar";
 import { useEffect } from "react";
 import { AppState } from "react-native";
@@ -23,7 +23,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <BottomTabs />
+      <StackNavigator />
     </NavigationContainer>
   );
 }
