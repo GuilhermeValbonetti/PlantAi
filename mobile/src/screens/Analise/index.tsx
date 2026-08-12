@@ -1,10 +1,119 @@
-import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Camera } from "lucide-react-native";
+import * as ImagePicker from "expo-image-picker";
+import { Camera, Sparkles } from "lucide-react-native";
+import { analisarImagemPlanta } from "../../lib/analysisService";
 
 const AnaliseScreen: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
+  const [imageUri, setImageUri] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [erro, setErro] = useState<string | null>(null);
+
+  const pedirPermissaoCamera = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (status !== "granted") {
+      Alert.alert("Permissao necessaria", "E necessario permitir o acesso a camera.");
+      return false;
+    }
+
+    return true;
+  };
+
+  const pedirPermissaoGaleria = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (status !== "granted") {
+      Alert.alert("Permissao necessaria", "E necessario permitir o acesso a galeria.");
+      return false;
+    }
+
+    return true;
+  };
+
+  const definirImagemSelecionada = (uri: string) => {
+    setImageUri(uri);
+    setErro(null);
+  };
+
+  const abrirCamera = async () => {
+    const permitido = await pedirPermissaoCamera();
+
+    if (!permitido) {
+      return;
+    }
+
+    const resposta = await ImagePicker.launchCameraAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [4, 5],
+      quality: 0.8,
+    });
+
+    if (!resposta.canceled) {
+      definirImagemSelecionada(resposta.assets[0].uri);
+    }
+  };
+
+  const abrirGaleria = async () => {
+    const permitido = await pedirPermissaoGaleria();
+
+    if (!permitido) {
+      return;
+    }
+
+    const resposta = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [4, 5],
+      quality: 0.8,
+    });
+
+    if (!resposta.canceled) {
+      definirImagemSelecionada(resposta.assets[0].uri);
+    }
+  };
+
+  const analisarFoto = async () => {
+    if (!imageUri) {
+      Alert.alert("Selecione uma foto", "Tire uma foto ou escolha uma imagem da galeria.");
+
+      return;
+    }
+
+    setLoading(true);
+    setErro(null);
+
+    try {
+      const resposta = await analisarImagemPlanta(imageUri);
+      navigation.navigate("Resultado", {
+        imageUri,
+        resultado: resposta,
+      });
+    } catch (error) {
+      const mensagem = error instanceof Error ? error.message : "Nao foi possivel analisar a foto.";
+      setErro(mensagem);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const limparTudo = () => {
+    setImageUri(null);
+    setErro(null);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -23,24 +132,56 @@ const AnaliseScreen: React.FC = () => {
         <View style={styles.analysisCard}>
           <Text style={styles.sectionTitle}>Nova análise</Text>
           <Text style={styles.sectionDescription}>
-            Fotografe uma folha em boas condições de iluminação.
+            Fotografe uma folha com boa iluminação para melhorar a leitura da IA.
           </Text>
 
-          <View style={styles.photoPlaceholder}>
-            <Camera size={54} color="#2F8E3E" strokeWidth={1.8} style={styles.cameraIcon} />
-            <Text style={styles.photoPlaceholderText}>
-              Capture detalhes visíveis da folha para obter um diagnóstico mais preciso.
-            </Text>
-          </View>
+          {imageUri ? (
+            <Image source={{ uri: imageUri }} style={styles.previewImage} />
+          ) : (
+            <View style={styles.photoPlaceholder}>
+              <Camera size={54} color="#2F8E3E" strokeWidth={1.8} style={styles.cameraIcon} />
+              <Text style={styles.photoPlaceholderText}>
+                Capture detalhes visiveis da folha para obter um diagnostico mais preciso.
+              </Text>
+            </View>
+          )}
 
-          <TouchableOpacity style={styles.primaryButton} activeOpacity={0.8}>
+          <TouchableOpacity style={styles.primaryButton} activeOpacity={0.8} onPress={abrirCamera}>
             <Text style={styles.primaryButtonText}>Tirar foto</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.secondaryButton} activeOpacity={0.8}>
+          <TouchableOpacity style={styles.secondaryButton} activeOpacity={0.8} onPress={abrirGaleria}>
             <Text style={styles.secondaryButtonText}>Escolher da galeria</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.actionButton, (!imageUri || loading) && styles.actionButtonDisabled]}
+            activeOpacity={0.8}
+            onPress={analisarFoto}
+            disabled={!imageUri || loading}
+          >
+            {loading ? (
+              <ActivityIndicator color="#FFFFFF" />
+            ) : (
+              <View style={styles.buttonRow}>
+                <Sparkles size={18} color="#FFFFFF" />
+                <Text style={styles.actionButtonText}>Analisar foto</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+
+          {imageUri ? (
+            <TouchableOpacity style={styles.linkButton} activeOpacity={0.8} onPress={limparTudo}>
+              <Text style={styles.linkButtonText}>Trocar imagem</Text>
+            </TouchableOpacity>
+          ) : null}
         </View>
 
+        {erro ? (
+          <View style={styles.errorCard}>
+            <Text style={styles.errorTitle}>Nao foi possivel analisar</Text>
+            <Text style={styles.errorText}>{erro}</Text>
+          </View>
+        ) : null}
         <View style={styles.tipsCard}>
           <Text style={styles.tipsTitle}>Dicas para uma boa foto</Text>
           <View style={styles.tipItem}>
@@ -49,17 +190,13 @@ const AnaliseScreen: React.FC = () => {
           </View>
           <View style={styles.tipItem}>
             <Text style={styles.tipBullet}>•</Text>
-            <Text style={styles.tipText}>Foque na área afetada da folha.</Text>
+            <Text style={styles.tipText}>Foque na area afetada da folha.</Text>
           </View>
           <View style={styles.tipItem}>
             <Text style={styles.tipBullet}>•</Text>
-            <Text style={styles.tipText}>Evite sombras, borrões e áreas muito escuras.</Text>
+            <Text style={styles.tipText}>Evite sombras, borrões e areas muito escuras.</Text>
           </View>
         </View>
-
-        <TouchableOpacity style={styles.actionButton} activeOpacity={0.8}>
-          <Text style={styles.actionButtonText}>Continuar</Text>
-        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
@@ -195,6 +332,13 @@ const styles = StyleSheet.create({
   cameraIcon: {
     marginBottom: 16,
   },
+  previewImage: {
+    width: "100%",
+    height: 260,
+    borderRadius: 20,
+    marginBottom: 18,
+    backgroundColor: "#F8FAFC",
+  },
   photoPlaceholderText: {
     textAlign: "center",
     color: "#475569",
@@ -225,6 +369,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "700",
     color: "#1F2937",
+  },
+  buttonRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
   },
   tipsCard: {
     backgroundColor: "#FFFFFF",
@@ -267,10 +417,91 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 8,
   },
+  actionButtonDisabled: {
+    opacity: 0.7,
+  },
   actionButtonText: {
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "700",
+  },
+  linkButton: {
+    alignItems: "center",
+    marginTop: 12,
+  },
+  linkButtonText: {
+    color: "#2F8E3E",
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  resultCard: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 24,
+    padding: 20,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOpacity: 0.04,
+    shadowOffset: { width: 0, height: 6 },
+    shadowRadius: 14,
+    elevation: 2,
+  },
+  resultTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#102A43",
+    marginBottom: 12,
+  },
+  resultBadge: {
+    alignSelf: "flex-start",
+    backgroundColor: "#E6F4EA",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 999,
+    marginBottom: 16,
+  },
+  resultBadgeText: {
+    color: "#1E7C3E",
+    fontSize: 12,
+    fontWeight: "700",
+    textTransform: "uppercase",
+  },
+  resultBlock: {
+    marginBottom: 14,
+  },
+  resultLabel: {
+    fontSize: 12,
+    color: "#6B7280",
+    marginBottom: 6,
+    textTransform: "uppercase",
+  },
+  resultValue: {
+    fontSize: 16,
+    color: "#102A43",
+    fontWeight: "700",
+  },
+  resultText: {
+    fontSize: 14,
+    color: "#475569",
+    lineHeight: 20,
+  },
+  errorCard: {
+    backgroundColor: "#FFF1F2",
+    borderRadius: 20,
+    padding: 16,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: "#FECDD3",
+  },
+  errorTitle: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#9F1239",
+    marginBottom: 6,
+  },
+  errorText: {
+    fontSize: 14,
+    color: "#BE123C",
+    lineHeight: 20,
   },
 });
 

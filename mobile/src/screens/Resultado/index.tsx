@@ -1,263 +1,282 @@
 import React from "react";
 import {
+  Image,
+  Pressable,
+  SafeAreaView,
   ScrollView,
+  StyleSheet,
   Text,
   View,
-  Image,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  useWindowDimensions,
 } from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { ArrowLeft } from "lucide-react-native";
+import type { ResultadoAnalise } from "../../lib/analysisService";
 
-export default function HOME() {
-  const { width } = useWindowDimensions();
+type ResultadoRouteParams = {
+  imageUri?: string;
+  resultado?: ResultadoAnalise;
+};
 
-  const titleSize = width * 0.07;
-  const subtitleSize = width * 0.04;
-  const bodySize = width * 0.038;
+function obterPorcentagemConfianca(nivel?: string) {
+  const valor = (nivel || "").toLowerCase();
+
+  if (valor.includes("alta")) {
+    return "92%";
+  }
+
+  if (valor.includes("media") || valor.includes("média")) {
+    return "65%";
+  }
+
+  if (valor.includes("baixa")) {
+    return "30%";
+  }
+
+  return "--";
+}
+
+export default function ResultadoScreen() {
+  const navigation = useNavigation<any>();
+  const route = useRoute();
+  const { imageUri, resultado } = (route.params || {}) as ResultadoRouteParams;
+
+  const voltarParaAnalise = () => {
+    navigation.goBack();
+  };
+
+  const novaAnalise = () => {
+    navigation.navigate("Analise");
+  };
+
+  if (!resultado) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyTitle}>Nenhum resultado encontrado</Text>
+          <Text style={styles.emptyText}>
+            Volte para a tela de análise e envie uma foto para ver o diagnóstico aqui.
+          </Text>
+          <Pressable style={styles.primaryButton} onPress={voltarParaAnalise}>
+            <Text style={styles.primaryButtonText}>Voltar</Text>
+          </Pressable>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
-    <ScrollView
-      contentContainerStyle={[
-        styles.container,
-        {
-          paddingHorizontal: width * 0.05,
-        },
-      ]}
-    >
-      {/* Cabeçalho */}
-      <View style={styles.header}>
-        <Image
-          source={require("../../assets/images/left-arrow.png")}
-          style={{
-            width: width * 0.05,
-            height: width * 0.05,
-          }}
-        />
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <Pressable style={styles.backButton} onPress={voltarParaAnalise}>
+            <ArrowLeft size={20} color="#1F2937" />
+          </Pressable>
 
-        <Text
-          style={{
-            fontSize: titleSize,
-            fontFamily: "Inter_700Bold",
-            flex: 1,
-            marginLeft: 15,
-          }}
-        >
-          Resultado das análises
-        </Text>
-      </View>
-
-      {/* Doença */}
-      <View style={styles.doenca}>
-        <Text
-          style={{
-            fontSize: titleSize + 6,
-            fontFamily: "Inter_900Black",
-          }}
-        >
-          Nome doença
-        </Text>
-
-        <Text
-          style={{
-            fontSize: subtitleSize,
-            fontFamily: "Inter_400Regular",
-            marginTop: 5,
-          }}
-        >
-          Descrição
-        </Text>
-      </View>
-
-      {/* Informações */}
-      <View style={styles.infoContainer}>
-        <View style={{ flex: 1 }}>
-          <Text
-            style={{
-              fontFamily: "Inter_400Regular",
-              fontSize: bodySize,
-            }}
-          >
-            Probabilidade
-          </Text>
-
-          <Text
-            style={{
-              fontFamily: "Inter_700Bold",
-              fontSize: titleSize,
-              color: "#134d12",
-            }}
-          >
-            100%
-          </Text>
+          <Text style={styles.headerTitle}>Resultado da análise</Text>
         </View>
 
-        <View style={{ flex: 1 }}>
-          <Text
-            style={{
-              fontFamily: "Inter_400Regular",
-              fontSize: bodySize,
-              color: "#d2b294",
-            }}
-          >
-            Nível de risco
-          </Text>
+        <View style={styles.card}>
+          <Text style={styles.nomePopular}>{resultado.nomePopular}</Text>
+          <Text style={styles.subtitulo}>({resultado.possivelDoenca})</Text>
 
-          <Text
-            style={styles.grau}
-          >
-            Grau
-          </Text>
+          <View style={styles.infoRow}>
+            <View style={styles.infoBlock}>
+              <Text style={styles.infoLabel}>Probabilidade</Text>
+              <Text style={styles.probabilidade}>{obterPorcentagemConfianca(resultado.nivelConfianca)}</Text>
+            </View>
+
+            <View style={styles.infoBlock}>
+              <Text style={styles.infoLabel}>Nível de gravidade</Text>
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>{resultado.nivelConfianca}</Text>
+              </View>
+            </View>
+          </View>
+
+          {imageUri ? <Image source={{ uri: imageUri }} style={styles.image} /> : null}
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Tratamento</Text>
+            <Text style={styles.sectionText}>{resultado.tratamento}</Text>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Prevenção</Text>
+            <Text style={styles.sectionText}>{resultado.prevencao}</Text>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Observações</Text>
+            <Text style={styles.sectionText}>{resultado.observacoes || "Sem observações adicionais."}</Text>
+          </View>
         </View>
-      </View>
 
-      {/* Imagem */}
-      <Image
-        source={require("../../assets/images/images.jpg")}
-        style={styles.image}
-      />
-
-      {/* Sintomas */}
-      <View style={{ marginTop: 20 }}>
-        <Text
-          style={{
-            fontFamily: "Inter_600SemiBold",
-            fontSize: subtitleSize + 4,
-          }}
-        >
-          Sintomas encontrados
-        </Text>
-
-        <FlatList
-          scrollEnabled={false}
-          style={{ marginTop: 10 }}
-          data={[
-            { key: "Lista de sintomas" },
-            { key: "Lista de sintomas 2" },
-          ]}
-          renderItem={({ item }) => (
-            <Text
-              style={{
-                fontSize: bodySize,
-                fontFamily: "Inter_400Regular",
-                marginBottom: 6,
-              }}
-            >
-              • {item.key}
-            </Text>
-          )}
-        />
-      </View>
-
-      <Pressable style={styles.explicacao}>
-        <Text
-          style={{
-            textAlign: "center",
-            fontSize: bodySize,
-          }}
-        >
-          Ver explicação detalhada
-        </Text>
-      </Pressable>
-
-      
-      <View style={styles.botoes}>
-        <Pressable style={styles.botaoSalvar}>
-          <Text style={styles.textoBotaoSalvar}>
-            Salvar
-          </Text>
-        </Pressable>
-
-        <Pressable style={styles.botaoNovo}>
-          <Text style={styles.textoBotaoNovo}>
-            Nova análise
-          </Text>
-        </Pressable>
-      </View>
-    </ScrollView>
+        <View style={styles.actionsRow}>
+          <Pressable style={styles.secondaryButton} onPress={novaAnalise}>
+            <Text style={styles.secondaryButtonText}>+ Nova análise</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 25,
-    backgroundColor: "#fff",
-    flexGrow: 1,
+    flex: 1,
+    backgroundColor: "#F5F7FA",
   },
-
+  content: {
+    padding: 20,
+    paddingBottom: 32,
+  },
   header: {
     flexDirection: "row",
     alignItems: "center",
-  },
-
-  doenca: {
-    marginTop: 25,
-    marginBottom: 25,
-  },
-
-  infoContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginBottom: 20,
-  },
-
-  grau: {
-    alignSelf: "flex-start",
-    marginTop: 5,
-    backgroundColor: "#feecc8",
-    color: "#d8904f",
-    paddingHorizontal: 20,
-    paddingVertical: 5,
-    borderRadius: 6,
-    fontFamily: "Inter_600SemiBold",
-  },
-
-  image: {
-    width: "50%",
-    aspectRatio: 2,
-    borderRadius: 12,
     marginTop: 10,
+    marginBottom: 18,
   },
-
-  explicacao: {
-    marginTop: 20,
-    borderWidth: 1,
-    borderColor: "#D9D9D9",
-    borderRadius: 8,
-    paddingVertical: 12,
+  backButton: {
+    width: 38,
+    height: 38,
+    borderRadius: 12,
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 2,
   },
-
-  botoes: {
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#102A43",
+  },
+  card: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 24,
+    padding: 18,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 8 },
+    shadowRadius: 18,
+    elevation: 3,
+  },
+  nomePopular: {
+    fontSize: 24,
+    fontWeight: "800",
+    color: "#111827",
+  },
+  subtitulo: {
+    marginTop: 4,
+    fontSize: 14,
+    color: "#6B7280",
+    fontStyle: "italic",
+  },
+  infoRow: {
     flexDirection: "row",
-    gap: 12,
+    justifyContent: "space-between",
     marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 18,
   },
-
-  botaoSalvar: {
+  infoBlock: {
     flex: 1,
-    backgroundColor: "#3a863f",
-    borderRadius: 8,
-    paddingVertical: 14,
-    alignItems: "center",
   },
-
-  botaoNovo: {
+  infoLabel: {
+    fontSize: 12,
+    color: "#6B7280",
+    marginBottom: 8,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  probabilidade: {
+    fontSize: 34,
+    fontWeight: "800",
+    color: "#2F7D32",
+  },
+  badge: {
+    alignSelf: "flex-start",
+    backgroundColor: "#FDECC8",
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 999,
+  },
+  badgeText: {
+    color: "#D97706",
+    fontWeight: "700",
+    fontSize: 14,
+  },
+  image: {
+    width: "100%",
+    height: 220,
+    borderRadius: 18,
+    marginBottom: 18,
+    backgroundColor: "#E5E7EB",
+  },
+  section: {
+    marginBottom: 16,
+  },
+  sectionTitle: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#111827",
+    marginBottom: 6,
+  },
+  sectionText: {
+    fontSize: 14,
+    lineHeight: 21,
+    color: "#4B5563",
+  },
+  actionsRow: {
+    flexDirection: "row",
+    marginTop: 18,
+  },
+  secondaryButton: {
     flex: 1,
     borderWidth: 1,
-    borderColor: "#D9D9D9",
-    borderRadius: 8,
+    borderColor: "#D1D5DB",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 14,
     paddingVertical: 14,
     alignItems: "center",
   },
-
-  textoBotaoSalvar: {
-    color: "#fff",
-    fontFamily: "Inter_700Bold",
+  secondaryButtonText: {
+    color: "#111827",
+    fontSize: 15,
+    fontWeight: "700",
   },
-
-  textoBotaoNovo: {
-    fontFamily: "Inter_600SemiBold",
+  primaryButton: {
+    marginTop: 18,
+    backgroundColor: "#2F7D32",
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: "center",
+  },
+  primaryButtonText: {
+    color: "#FFFFFF",
+    fontWeight: "700",
+  },
+  emptyState: {
+    flex: 1,
+    padding: 24,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyTitle: {
+    fontSize: 22,
+    fontWeight: "800",
+    color: "#111827",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  emptyText: {
+    fontSize: 14,
+    color: "#4B5563",
+    textAlign: "center",
+    lineHeight: 20,
+    marginBottom: 18,
   },
 });
