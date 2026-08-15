@@ -1,13 +1,15 @@
+import "dotenv/config"
 import express from "express";
 import cors from "cors";
 import multer from "multer";
 import fs from "fs";
 import path from "path";
+import { connectDB, execSQLQuery } from './src/db/connection.ts';
 import { GoogleGenAI } from "@google/genai";
 
 const app = express();
 const port = Number(process.env.PORT || 3001);
-
+connectDB();
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
