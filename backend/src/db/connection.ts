@@ -1,8 +1,8 @@
 import { Client } from 'pg';
 
+let connection : any;
 
-
-
+//Parametros para conexão
 const client = new Client({
 user: process.env.DB_USER,
 password:  process.env.DB_PASS,
@@ -11,6 +11,7 @@ port: Number(process.env.DB_PORT),
 database: process.env.DB_SERVER
 })
 
+//Conexão com o banco
 export async function connectDB()
 {
     try{
@@ -24,10 +25,14 @@ export async function connectDB()
     }
 }
 
+//Execução de querys
 export async function execSQLQuery(SQLQuery: string)
 {
-    const connection = await connectDB();
-
+    if(connection)
+    {}
+    else
+    connection = await connectDB();
+    
     try
     {
         const res = await connection?.query(SQLQuery)
