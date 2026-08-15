@@ -71,11 +71,8 @@ export default function Histórico() {
   });
 
   return (
-    <View style={styles.container}>
-      <View style={styles.topo}>
-        <ChevronLeft size={40} color="#666" style={styles.voltar} />
+    <View style={styles.container}>   
         <Text style={styles.titulo}>Histórico de análises </Text>
-      </View>
       <StatusBar style="auto" />
 
       <View style={styles.filtros}>
@@ -167,12 +164,9 @@ const styles = StyleSheet.create({
   },
   titulo: {
     fontSize: 30,
-    fontWeight: 500,
-    marginRight: 70,
-  },
-  topo: {
+    fontWeight: 700,
     marginBottom: 40,
-    flexDirection: "row",
+     color: "#102A43",
   },
   voltar: {
     marginRight: 60,

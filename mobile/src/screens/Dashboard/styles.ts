@@ -23,16 +23,16 @@ export const styles = StyleSheet.create({
     paddingRight: 16,
   },
   greeting: {
-    fontSize: 28,
+    fontSize: 35,
     lineHeight: 34,
     fontWeight: '800',
-    color: '#26311c',
+     color: "#102A43",
     letterSpacing: -0.6,
   },
   subtitle: {
     marginTop: 4,
     fontSize: 15,
-    color: '#60704f',
+     color: "#102A43",
     fontWeight: '500',
   },
   headerActions: {

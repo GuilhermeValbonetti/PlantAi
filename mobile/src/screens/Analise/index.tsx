@@ -205,7 +205,8 @@ const AnaliseScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F7FA",
+    backgroundColor: '#f8fbf3',
+    paddingTop: 30,
   },
   content: {
     padding: 24,
@@ -237,8 +238,8 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   title: {
-    fontSize: 24,
-    fontWeight: "700",
+    fontSize: 30,
+    fontWeight: 700,
     color: "#102A43",
   },
   card: {
