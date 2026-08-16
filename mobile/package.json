@@ -2,6 +2,13 @@
   "name": "mobile",
   "version": "1.0.0",
   "main": "index.ts",
+  "private": true,
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
     "@react-native-async-storage/async-storage": "2.2.0",
@@ -35,4 +42,5 @@
     "web": "expo start --web"
   },
   "private": true
+>>>>>>> 985027ee8aad449dc01f1ffae43417d9c8478105
 }
