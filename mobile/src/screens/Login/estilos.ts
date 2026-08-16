@@ -1,69 +1,69 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  screen: {
+  tela: {
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  scroll: {
+  rolagem: {
     flexGrow: 1,
   },
-  container: {
+  conteiner: {
     flex: 1,
     justifyContent: 'center',
     padding: 24,
   },
-  card: {
+  cartao: {
     minHeight: 520,
   },
-  title: {
+  titulo: {
     fontSize: 28,
     color: '#111827',
     fontWeight: '700',
   },
-  subtitle: {
+  subtitulo: {
     fontSize: 15,
     color: '#6B7280',
     marginTop: 8,
   },
-  forgotPasswordContainer: {
+  containerEsqueciSenha: {
     marginTop: 8,
     width: '100%',
     alignItems: 'flex-end',
   },
-  forgotPasswordText: {
+  textoEsqueciSenha: {
     color: '#4CAF50',
     fontSize: 14,
     fontWeight: '600',
   },
-  dividerRow: {
+  filaSeparadora: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 18,
   },
-  dividerLine: {
+  linhaSeparadora: {
     flex: 1,
     height: 1,
     backgroundColor: '#E5E7EB',
   },
-  dividerText: {
+  textoSeparador: {
     marginHorizontal: 14,
     color: '#6B7280',
     fontSize: 14,
   },
-  googleButton: {
+  botaoGoogle: {
     borderColor: '#D1D5DB',
   },
-  footer: {
+  rodape: {
     marginTop: 24,
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  footerText: {
+  textoRodape: {
     color: '#6B7280',
     fontSize: 14,
   },
-  footerLink: {
+  linkRodape: {
     color: '#4CAF50',
     fontSize: 14,
     fontWeight: '700',

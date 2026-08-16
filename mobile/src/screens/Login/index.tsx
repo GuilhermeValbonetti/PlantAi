@@ -9,10 +9,11 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import But from '../../components/botao/botao';
+import Button from '../../components/botao/botao';
 import Card from '../../components/cartao/cartao';
 import Input from '../../components/entrada/entrada';
 import styles from './estilos';
+
 
 const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -43,12 +44,12 @@ const Login = ({ onCreateAccount }: LoginProps) => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.screen} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <ScrollView contentContainerStyle={[styles.scroll, { minHeight: height }]} keyboardShouldPersistTaps="handled">
-        <View style={styles.container}>
-          <Card style={styles.card}>
-            <Text style={styles.title}>Bem-vindo!</Text>
-            <Text style={styles.subtitle}>Faça login para continuar</Text>
+    <KeyboardAvoidingView style={styles.tela} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <ScrollView contentContainerStyle={[styles.rolagem, { minHeight: height }]} keyboardShouldPersistTaps="handled">
+        <View style={styles.conteiner}>
+          <Card style={styles.cartao}>
+            <Text style={styles.titulo}>Bem-vindo!</Text>
+            <Text style={styles.subtitulo}>Faça login para continuar</Text>
 
             <Input
               label="E-mail"
@@ -68,16 +69,16 @@ const Login = ({ onCreateAccount }: LoginProps) => {
               error={errors.password}
             />
 
-            <TouchableOpacity style={styles.forgotPasswordContainer} activeOpacity={0.7} onPress={() => {}}>
-              <Text style={styles.forgotPasswordText}>Esqueci minha senha</Text>
+            <TouchableOpacity style={styles.containerEsqueciSenha} activeOpacity={0.7} onPress={() => {}}>
+              <Text style={styles.textoEsqueciSenha}>Esqueci minha senha</Text>
             </TouchableOpacity>
 
             <Button title="Entrar" onPress={handleLogin} loading={loading} />
 
-            <View style={styles.dividerRow}>
-              <View style={styles.dividerLine} />
-              <Text style={styles.dividerText}>ou</Text>
-              <View style={styles.dividerLine} />
+            <View style={styles.filaSeparadora}>
+              <View style={styles.linhaSeparadora} />
+              <Text style={styles.textoSeparador}>ou</Text>
+              <View style={styles.linhaSeparadora} />
             </View>
 
             <Button
@@ -85,13 +86,13 @@ const Login = ({ onCreateAccount }: LoginProps) => {
               onPress={() => {}}
               variant="secondary"
               icon={<FontAwesome name="google" size={18} color="#DB4437" />}
-              style={styles.googleButton}
+              style={styles.botaoGoogle}
             />
 
-            <View style={styles.footer}>
-              <Text style={styles.footerText}>Não tem uma conta? </Text>
+            <View style={styles.rodape}>
+              <Text style={styles.textoRodape}>Não tem uma conta? </Text>
               <TouchableOpacity onPress={onCreateAccount} activeOpacity={0.7}>
-                <Text style={styles.footerLink}>Criar conta</Text>
+                <Text style={styles.linkRodape}>Criar conta</Text>
               </TouchableOpacity>
             </View>
           </Card>
