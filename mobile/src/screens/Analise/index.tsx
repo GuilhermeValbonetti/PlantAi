@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { Camera, Sparkles } from "lucide-react-native";
@@ -96,8 +97,10 @@ const AnaliseScreen: React.FC = () => {
     setLoading(true);
     setErro(null);
 
+//Pegando o ID - Yallison
+    const id : any = AsyncStorage.getItem("userId")
     try {
-      const resposta = await analisarImagemPlanta(imageUri);
+      const resposta = await analisarImagemPlanta(imageUri, id);
       navigation.navigate("Resultado", {
         imageUri,
         resultado: resposta,

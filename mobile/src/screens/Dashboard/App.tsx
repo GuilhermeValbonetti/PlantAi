@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Pressable, ScrollView, StatusBar as RNStatusBar, Text, View, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -65,7 +66,7 @@ const tabs: TabItem[] = [
 export default function App() {
   const [activeTab, setActiveTab] = useState('scan');
   const navigation = useNavigation<any>();
-  const [dados, setDados] = useState("jlkjlk")
+  const [dados, setDados] = useState("")
 
 useEffect(() =>
 {
@@ -79,11 +80,11 @@ useEffect(() =>
   })
   
   let atualizaDados = await response.json();
-  atualizaDados = atualizaDados.split(" ")[0]
+  atualizaDados = atualizaDados.nome.split(" ")[0]
+  const id = atualizaDados.id;
   await setDados(atualizaDados)
-  console.log(atualizaDados)
+  await AsyncStorage.setItem("userId", String(id));
 }
-
 getDados()
 })
 
