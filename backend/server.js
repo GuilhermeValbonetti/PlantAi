@@ -6,11 +6,14 @@ import fs from "fs";
 import path from "path";
 import { GoogleGenAI } from "@google/genai";
 import RouterUsuario from "./src/routes/usuario/usuario.js"
+import RouterAnalise from "./src/routes/analise/analise.js"
 
 const app = express();
 const port = Number(process.env.PORT || 3001);
 app.use(cors());  
 app.use("/usuario", RouterUsuario)
+app.use("/analise", RouterAnalise)
+
 
 const upload = multer({
   storage: multer.memoryStorage(),

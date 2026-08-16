@@ -46,7 +46,7 @@ function descobrirMimeType(uri: string) {
   return "image/jpeg";
 }
 
-export async function analisarImagemPlanta(imageUri: string): Promise<ResultadoAnalise> {
+export async function analisarImagemPlanta(imageUri: string, id: string): Promise<ResultadoAnalise> {
   const formData = new FormData();
 
   formData.append("imagem", {
@@ -66,6 +66,28 @@ export async function analisarImagemPlanta(imageUri: string): Promise<ResultadoA
     throw new Error(dados?.message || "Nao foi possivel concluir a analise.");
   }
 
+  //Fetch sendo enviado para o analises.js dentro do backend - Yallison
+  fetch("http://localhost:3001/analises-usuario",
+
+    {
+      method: 'POST',
+       headers: {
+      'Content-Type': 'application/json',
+     },
+     body : JSON.stringify(
+      {
+      id: id,
+      nomePopular: dados?.nomePopular || "Nao identificado",
+    possivelDoenca: dados?.possivelDoenca || "Nao identificado",
+    nivelConfianca: dados?.nivelConfianca || "Nao informado",
+    tratamento: dados?.tratamento || "Nao identificado",
+    prevencao: dados?.prevencao || "Nao identificado",
+    observacoes: dados?.observacoes || "",
+    rawText: dados?.rawText || "",
+     } )
+     
+    }
+  )
   return {
     nomePopular: dados?.nomePopular || "Nao identificado",
     possivelDoenca: dados?.possivelDoenca || "Nao identificado",
