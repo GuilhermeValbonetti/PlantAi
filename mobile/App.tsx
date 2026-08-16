@@ -2,23 +2,25 @@ import { NavigationContainer } from "@react-navigation/native";
 import StackNavigator from "./src/navigation/StackNavigator";
 import * as NavigationBar from "expo-navigation-bar";
 import { useEffect } from "react";
-import { AppState } from "react-native";
+import { AppState, Platform } from "react-native";
 
 export default function App() {
   useEffect(() => {
-    const esconderBarra = async () => {
-      await NavigationBar.setVisibilityAsync("hidden");
-    };
+    if (Platform.OS === "android") {
+      const esconderBarra = async () => {
+        await NavigationBar.setVisibilityAsync("hidden");
+      };
 
-    esconderBarra();
+      esconderBarra();
 
-    const subscription = AppState.addEventListener("change", (state) => {
-      if (state === "active") {
-        esconderBarra();
-      }
-    });
+      const subscription = AppState.addEventListener("change", (state) => {
+        if (state === "active") {
+          esconderBarra();
+        }
+      });
 
-    return () => subscription.remove();
+      return () => subscription.remove();
+    }
   }, []);
 
   return (

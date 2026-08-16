@@ -1,4 +1,5 @@
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import { Pressable, ScrollView, StatusBar as RNStatusBar, Text, View, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -60,9 +61,33 @@ const tabs: TabItem[] = [
   { key: 'profile', label: 'Perfil', icon: 'user' },
 ];
 
+
 export default function App() {
   const [activeTab, setActiveTab] = useState('scan');
   const navigation = useNavigation<any>();
+  const [dados, setDados] = useState("jlkjlk")
+
+useEffect(() =>
+{
+  async function getDados()
+{
+  const response = await fetch("http://localhost:3001/usuario", {
+   method: 'GET',
+     headers: {
+    'Content-Type': 'application/json',
+     }
+  })
+  
+  let atualizaDados = await response.json();
+  atualizaDados = atualizaDados.split(" ")[0]
+  await setDados(atualizaDados)
+  console.log(atualizaDados)
+}
+
+getDados()
+})
+
+  
 
   return (
     <View style={[styles.screen, { backgroundColor: '#f8fbf3' }]}>
@@ -72,7 +97,7 @@ export default function App() {
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.greetingBlock}>
-              <Text style={styles.greeting}>Olá, João!</Text>
+              <Text style={styles.greeting}>Olá, {dados}!</Text>
               <Text style={styles.subtitle}>Bem-vindo ao PlantAi</Text>
             </View>
 

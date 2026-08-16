@@ -1,12 +1,18 @@
 import { Client } from 'pg';
 
+let connection;
 
-
+//Parametros para conexão
 const client = new Client({
-    connectionString: `postgresql://${process.env.DB_USER}:${process.env.DB_PASS}@localhost:${process.env.DB_PORT}/${process.env.DB_SERVER}`
+user: process.env.DB_USER,
+password:  process.env.DB_PASS,
+host: "localhost",
+port: Number(process.env.DB_PORT),
+database: process.env.DB_SERVER
 })
 
-async function connectDB()
+//Conexão com o banco
+export async function connectDB()
 {
     try{
         await client.connect();
@@ -19,12 +25,14 @@ async function connectDB()
     }
 }
 
-connectDB();
-
-export async function execSQLQuery(SQLQuery: string)
+//Execução de querys
+export async function execSQLQuery(SQLQuery)
 {
-    const connection = await connectDB();
-
+    if(connection)
+    {}
+    else
+    connection = await connectDB();
+    
     try
     {
         const res = await connection?.query(SQLQuery)

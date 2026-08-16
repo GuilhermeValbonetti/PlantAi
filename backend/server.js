@@ -4,12 +4,14 @@ import cors from "cors";
 import multer from "multer";
 import fs from "fs";
 import path from "path";
-import { connectDB, execSQLQuery } from './src/db/connection.ts';
 import { GoogleGenAI } from "@google/genai";
+import RouterUsuario from "./src/routes/usuario/usuario.js"
 
 const app = express();
 const port = Number(process.env.PORT || 3001);
-connectDB();
+app.use(cors());  
+app.use("/usuario", RouterUsuario)
+
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
