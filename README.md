@@ -85,7 +85,7 @@ Nesta primeira versão do projeto, serão implementadas as seguintes funcionalid
 
 ### Inteligência Artificial
 
-- API de IA para análise de imagens *(em definição)*
+- API de IA para análise de imagens - Vertex Gemini
 
 ---
 
